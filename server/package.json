@@ -1,0 +1,22 @@
+{
+    "name": "wa-proxy-server",
+    "version": "0.0.2",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+    },
+    "contributors": [
+        "Richard Köster <rhm.koster@gmail.com>",
+        "Marijn van der Werf <marijn.vanderwerf@gmail.com>"
+    ],
+    "dependencies": {
+        "socket.io": ">=0.9.16",
+        "express": "3.x",
+        "nosql": ">=1.0.0"
+    },
+    "subdomain": "marijnvdwerf-server",
+    "engines": {
+        "node": "0.10.x"
+    }
+}
