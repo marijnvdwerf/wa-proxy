@@ -1,2 +1,2 @@
-/Users/Richard/Development/wa-proxy/app/platforms/android/bin/AndroidManifest.xml : \
-/Users/Richard/Development/wa-proxy/app/platforms/android/AndroidManifest.xml \
+/Users/Richard/Development/app/platforms/android/bin/AndroidManifest.xml : \
+/Users/Richard/Development/app/platforms/android/AndroidManifest.xml \
