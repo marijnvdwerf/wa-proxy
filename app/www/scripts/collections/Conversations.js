@@ -7,7 +7,7 @@ define([
     return Backbone.Collection.extend({
         model: ConversationModel,
 
-        url: 'http://localhost/conversations'
+        url: 'http://marijnvdwerf-server.jit.su/conversations'
     });
 
 });

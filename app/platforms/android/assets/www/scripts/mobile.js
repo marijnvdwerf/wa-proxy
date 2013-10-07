@@ -6,8 +6,7 @@ require.config({
         "jquery": "../vendor/jquery/jquery-2.0.3.min",
         "jquerymobile": "../vendor/jquery-mobile/jquery.mobile-1.3.2.min",
         "underscore": "../vendor/lodash/lodash.min",
-        "backbone": "../vendor/backbone/backbone-min",
-        "socket.io": "../vendor/socket.io/socket.io.js"
+        "backbone": "../vendor/backbone/backbone-min"
 
     },
 

@@ -7,7 +7,9 @@ define([
             name: '',
             id: '',
             messages: null
-        }
+        },
+
+        idAttribute:"_id"
     });
 
 });
