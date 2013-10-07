@@ -15,10 +15,12 @@ define([
             conversation: null
         },
 
-        notifyPebble: function (sender, message) {
+        notify: function (data) {
+            navigator.notification.vibrate(2500);
+
             pebblePlugin.notifyPebble(function () {
             }, function () {
-            }, sender, message);
+            }, data.name, data.message);
         },
 
         checkConnection: function () {
@@ -37,9 +39,9 @@ define([
             //this.notifyPebble();
             this.socket = io.connect("http://marijnvdwerf-server.jit.su");
 
-            this.socket.on('message', function (data) {
-                this.notifyPebble(data.name, data.message);
-            });
+            this.socket.on('message', $.proxy(function (message) {
+                this.notify(message);
+            }, this));
 
 
             this.conversations = new ConversationsCollection();
