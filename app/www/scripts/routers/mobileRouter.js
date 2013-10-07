@@ -19,15 +19,26 @@ define([
             pebblePlugin.notifyPebble(function(){},function(){},sender,message);
         },
 
+        checkConnection: function() {
+            var attributeValue = (navigator.connection.type === Connection.NONE) ? 'offline' : 'online';
+            $('body').attr('data-connection', attributeValue);
+        },
+
         // The Router constructor
         initialize: function () {
+            // Check network state
+            document.addEventListener('online', this.checkConnection, false);
+            document.addEventListener('offline', this.checkConnection, false);
+            document.addEventListener('resume', this.checkConnection, false);
+            this.checkConnection();
 
             //this.notifyPebble();
             this.socket = io.connect("http://marijnvdwerf-server.jit.su");
 
             this.socket.on('message', function(data){
                 this.notifyPebble(data.name,data.message);
-            })
+            });
+
 
             this.conversations = new ConversationsCollection();
 

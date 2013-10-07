@@ -1,0 +1,11 @@
+div[data-role="header"] {
+    border-color: transparent;
+}
+
+body[data-connection=offline] div[data-role="header"] {
+    background: crimson;
+}
+
+body[data-connection=online] div[data-role="header"] {
+    background: yellowgreen !important;
+}
