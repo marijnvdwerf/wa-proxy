@@ -15,8 +15,20 @@ define([
             conversation: null
         },
 
+        notifyPebble:function(){
+            alert('hoi');
+            pebblePlugin.notifyPebble(function(){},function(){},"Richard","hoi");
+        },
+
         // The Router constructor
         initialize: function () {
+
+            //this.notifyPebble();
+            this.socket = io.connect("http://marijnvdwerf-server.jit.su");
+
+            this.socket.on('message', function(data){
+                pebblePlugin.notifyPebble(function(){},function(){},data.name,data.message);
+            })
 
             this.conversations = new ConversationsCollection();
 
