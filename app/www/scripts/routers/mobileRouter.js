@@ -24,8 +24,13 @@ define([
         },
 
         checkConnection: function () {
-            var attributeValue = (navigator.connection.type === Connection.NONE) ? 'offline' : 'online';
-            $('body').attr('data-connection', attributeValue);
+            try {
+                var attributeValue = (navigator.connection.type === Connection.NONE) ? 'offline' : 'online';
+                $('body').attr('data-connection', attributeValue);
+            } catch (e) {
+                console.log(e);
+            }
+
         },
 
         // The Router constructor
