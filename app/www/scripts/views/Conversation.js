@@ -9,7 +9,8 @@ define([
         },
 
         render: function () {
-            this.template = _.template($('script.conversation').html(), this.model.toJSON());
+            console.log(this.model.get('identifier'));
+            this.template = _.template($('script.conversation').html(), {conversation: this.model.toJSON(), messages:this.model.get("messages").toJSON()});
             console.log(this.$el.find('[data-role="content"]'));
             this.$el.find('[data-role="content"]')
                 .html(this.template);

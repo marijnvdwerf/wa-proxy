@@ -1,8 +1,7 @@
 define([
-    'jquery',
     'backbone',
     'models/Conversation'
-], function ($, Backbone, ConversationModel) {
+], function (Backbone, ConversationModel) {
 
     return Backbone.Collection.extend({
         model: ConversationModel,

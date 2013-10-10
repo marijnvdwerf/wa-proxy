@@ -1,6 +1,7 @@
 define([
-    'backbone'
-], function (Backbone) {
+    'backbone',
+    'collections/Messages'
+], function (Backbone, MessagesCollection) {
 
     return Backbone.Model.extend({
         defaults: {
@@ -22,6 +23,12 @@ define([
             }).success(function () {
                     alert('sent');
                 });
+        },
+
+        parse:function(response, options){
+            response.messages = new MessagesCollection(response.messages);
+            console.log(response);
+            return response;
         }
     });
 
