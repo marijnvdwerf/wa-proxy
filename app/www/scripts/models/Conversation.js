@@ -9,7 +9,7 @@ define([
             messages: null
         },
 
-        idAttribute:"_id"
+        idAttribute: "_id",
 
         sendMessage: function (message) {
             var self = this;
