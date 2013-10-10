@@ -58,6 +58,9 @@
 </script>
 
 <script class="conversation" type="text/template">
+    <form>
+        <input type="text" class="input-message" name="message"/>
+    </form>
     <ul data-role="listview">
         <% _.each( messages, function( message, id ) { %>
         <li>
