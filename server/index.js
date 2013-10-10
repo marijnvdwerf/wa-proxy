@@ -1,78 +1,118 @@
-var nosql = require('nosql');
-var db = nosql.load('data/db.nosql', 'data/media');
+var MongoClient = require('mongodb').MongoClient;
 
-var express = require('express');
-var app = express();
-var http = require('http');
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
+    var conversations = db.collection('conversations');
+    var drafts = db.collection('drafts');
 
-app.use(express.bodyParser());
-server.listen(80);
+    var express = require('express');
+    var app = express();
+    var http = require('http');
+    var server = http.createServer(app);
+    var io = require('socket.io').listen(server);
 
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
+    app.use(express.bodyParser());
+    server.listen(80);
 
-app.get('/', function (req, res) {
-    res.send('Hello World');
-});
+    app.all('/*', function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        next();
+    });
 
-app.get('/conversations', function (req, res) {
-    db.all(function (conversation, index) {
-        return conversation
-    }, function (conversations) {
-        conversations.forEach(function (convo, index) {
-            convo.id = index + 1;
+    app.get('/', function (req, res) {
+        res.send('Hello World');
+        io.sockets.emit('message', {
+            name: 'World',
+            message: 'Hello'
         });
-        res.send(conversations);
-    });
-});
-
-app.get('/conversations/:identifier', function (req, res) {
-    var identifier = req.params.identifier;
-    res.send(req.params.identifier);
-});
-
-app.post('/conversations/:identifier', function (req, res) {
-    var identifier = req.params.identifier;
-    var type = req.body.type;
-    var message;
-
-    switch (type) {
-        case 'text':
-        default:
-            message = {
-                id: req.body.id,
-                time: req.body.t,
-                from: (req.body.author ? req.body.author : req.body.from),
-
-                body: req.body.message
-            }
-    }
-
-    console.log('MESSAGE');
-
-    db.update(function (conversation) {
-        console.log(conversation);
-        if (conversation.identifier === identifier) {
-            conversation.messages.push(message);
-        }
-        return conversation;
-    }, function (count) {
-        if (count === 0) {
-            db.insert({
-                identifier: identifier,
-                messages: [message]
-            });
-        }
     });
 
-    res.send('');
+    app.get('/conversations', function (req, res) {
+        conversations.find().toArray(function(err, convos) {
+            res.send(convos);
+        });
+//        conversations.insert({hello: 'world_no_safe'}, {w: 1}, function (err, result) {
+//            console.log(err);
+//            console.log(result);
+//        });
+    });
+
+    app.get('/conversations/:identifier', function (req, res) {
+        var identifier = req.params.identifier;
+        res.send(req.params.identifier);
+    });
+
+    app.post('/conversations/:identifier', function (req, res) {
+        var identifier = req.params.identifier;
+        res.send(req.params.identifier);
+
+        console.log('identifier: ' + identifier);
+
+        drafts.insert({
+            target: identifier,
+            message: req.body.message
+        }, {w: 1}, function (err, result) {
+            console.log('result');
+            console.log(err);
+            console.log(result);
+        });
+    });
+
+    app.post('/conversations/:identifier/secret', function (req, res) {
+        var identifier = req.params.identifier;
+        var type = req.body.type;
+        var message;
+
+        switch (type) {
+            case 'text':
+            default:
+                message = {
+                    id: req.body.id,
+                    time: req.body.t,
+                    from: (req.body.author ? req.body.author : req.body.from),
+
+                    body: req.body.message
+                };
+
+                io.sockets.emit('message', {
+                    name: message.from,
+                    message: message.body
+                });
+        }
+
+        console.log('MESSAGE');
+
+        conversations.insert({
+            identifier: identifier,
+            messages: [message]
+        }, {w: 1}, function (err, result) {
+            console.log(err);
+            console.log(result);
+        });
+
+        res.send('');
+
+//        db.update(function (conversation) {
+//            console.log(conversation);
+//            if (conversation.identifier === identifier) {
+//                conversation.messages.push(message);
+//            }
+//            return conversation;
+//        }, function (count) {
+//            if (count === 0) {
+//                db.insert({
+//                    identifier: identifier,
+//                    messages: [message]
+//                });
+//            }
+//        });
+//
+//        res.send('');
+    });
+
+    io.sockets.on('connection', function (socket) {
+        socket.emit('connected', 'connected');
+    });
+
 });
 
-io.sockets.on('connection', function (socket) {
-    socket.emit('connected', 'connected');
-});
