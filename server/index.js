@@ -81,13 +81,22 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
         }
 
         console.log('MESSAGE');
-
-        conversations.insert({
-            identifier: identifier,
-            messages: [message]
-        }, {w: 1}, function (err, result) {
-            console.log(err);
-            console.log(result);
+        
+        conversations.update({
+           identifier: identifier
+        }, {
+           $set: {
+              identifier: identifier
+           },
+           $push: {
+              messages: message
+           }
+        }, {
+           upsert:true,
+           w: 1
+        }, function(err, result) {
+           console.log(result);
+           console.log(err);
         });
 
         res.send('');
