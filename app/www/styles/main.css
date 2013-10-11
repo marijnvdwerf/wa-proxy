@@ -9,3 +9,8 @@ body[data-connection=offline] div[data-role="header"] {
 body[data-connection=online] div[data-role="header"] {
     background: yellowgreen !important;
 }
+
+
+.wa-mine {
+    text-align: right;
+}

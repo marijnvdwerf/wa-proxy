@@ -63,7 +63,11 @@
     </form>
     <ul data-role="listview">
         <% _.each( messages, function( message, id ) { %>
+        <% if (message.from === "me") { %>
+        <li class="wa-mine">
+            <% } else { %>
         <li>
+            <% } %>
             <%= message.body %>
         </li>
         <% }); %>
