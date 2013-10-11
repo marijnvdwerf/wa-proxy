@@ -12,6 +12,14 @@ define([
 
         idAttribute: "_id",
 
+        initialize: function () {
+            this.listenTo(this.get('messages'), 'sort', this.onMessage);
+        },
+
+        onMessage: function () {
+            this.trigger('change');
+        },
+
         sendMessage: function (message) {
             var self = this;
 
@@ -26,8 +34,8 @@ define([
         },
 
         parse: function (response, options) {
+            console.log('parse');
             response.messages = new MessagesCollection(response.messages);
-            console.log(response);
             return response;
         }
     });

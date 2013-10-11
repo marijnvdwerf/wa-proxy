@@ -8,6 +8,10 @@ define([
             'submit form': 'postMessage'
         },
 
+        initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+
         render: function () {
             console.log(this.model.get('identifier'));
             this.template = _.template($('script.conversation').html(), {conversation: this.model.toJSON(), messages: this.model.get("messages").toJSON()});
