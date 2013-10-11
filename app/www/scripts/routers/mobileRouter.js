@@ -42,7 +42,7 @@ define([
             this.checkConnection();
 
             //this.notifyPebble();
-            this.socket = io.connect("http://marijnvdwerf-server.jit.su");
+            this.socket = io.connect("http://marijnvdwerf-server.jit.su:80");
 
             this.socket.on('message', $.proxy(function (message) {
                 this.notify(message);
