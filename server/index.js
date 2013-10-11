@@ -75,8 +75,8 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
                 };
 
                 io.sockets.emit('message', {
-                    name: message.from,
-                    message: message.body
+                    conversationIdentifier: identifier,
+                    message: message
                 });
         }
 
