@@ -25,7 +25,7 @@ define([
                 });
         },
 
-        parse:function(response, options){
+        parse: function (response, options) {
             response.messages = new MessagesCollection(response.messages);
             console.log(response);
             return response;
