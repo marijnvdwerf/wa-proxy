@@ -16,11 +16,15 @@ define([
         },
 
         notify: function (data) {
-            navigator.notification.vibrate(2500);
+            try {
+                navigator.notification.vibrate(2500);
 
-            pebblePlugin.notifyPebble(function () {
-            }, function () {
-            }, data.name, data.message);
+                pebblePlugin.notifyPebble(function () {
+                }, function () {
+                }, data.name, data.message);
+            } catch (error) {
+
+            }
         },
 
         checkConnection: function () {
@@ -44,8 +48,19 @@ define([
             //this.notifyPebble();
             this.socket = io.connect("http://marijnvdwerf-server.jit.su:80");
 
-            this.socket.on('message', $.proxy(function (message) {
-                this.notify(message);
+            this.socket.on('message', $.proxy(function (data) {
+                var conversation = this.conversations.findWhere({identifier: data.conversationIdentifier});
+                if(conversation == null) {
+                    conversation = new ConversationModel({
+                        identifier:data.conversationIdentifier
+                    });
+                    this.conversations.push(conversation);
+                }
+
+                conversation.get('messages').push(data.message);
+
+                this.notify(data.message);
+                this.conversations.sort();
             }, this));
 
 
