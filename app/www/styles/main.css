@@ -1,15 +1,147 @@
-div[data-role="header"] {
-    border-color: transparent;
+.ui-header {
+    height: 44px;
+    background: #34af23;
+    border: 1px solid transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+    box-shadow: 0 1px rgba(0, 0, 0, .1), 0 2px 2px rgba(0, 0, 0, .05);
+    box-sizing: border-box;
 }
 
-body[data-connection=offline] div[data-role="header"] {
-    background: crimson;
+#logo,
+#logo * {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    left: 50%;
+    top: 50%;
+    margin: -18px;
+    background-size: contain;
+    overflow: hidden;
 }
 
-body[data-connection=online] div[data-role="header"] {
-    background: yellowgreen !important;
+#logo .phone {
+    background-image: url('../images/logo-phone.png');
 }
 
+#logo .ring-gradient,
+#logo .ring-mask {
+    width: 52px;
+    height: 52px;
+    margin: -26px;
+
+}
+
+#logo .ring-gradient.a {
+    background-image: url('../images/logo-ring-gradient-a.png');
+    -webkit-transition-duration: .25s;
+}
+
+#logo .ring-gradient.b {
+    background-image: url('../images/logo-ring-gradient-b.png');
+    -webkit-transition-duration: .25s;
+}
+
+#logo .ring-mask {
+    background-image: url('../images/logo-ring-mask.png');
+}
+
+@-webkit-keyframes rotation-cw {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}
+
+@-webkit-keyframes rotation-ccw {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(-359deg);
+    }
+}
+
+@-webkit-keyframes vibrate {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    8% {
+        -webkit-transform: rotate(-10deg);
+    }
+    16% {
+        -webkit-transform: rotate(20deg);
+    }
+    24% {
+        -webkit-transform: rotate(-10deg);
+    }
+    32% {
+        -webkit-transform: rotate(20deg);
+    }
+    40% {
+        -webkit-transform: rotate(-10deg);
+    }
+    48% {
+        -webkit-transform: rotate(20deg);
+    }
+    56% {
+        -webkit-transform: rotate(-10deg);
+    }
+    64% {
+        -webkit-transform: rotate(0deg);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and ( min-resolution: 192dpi), only screen and ( min-resolution: 2dppx) {
+    #logo .phone {
+        background-image: url('../images/logo-phone@2x.png');
+    }
+
+    #logo .ring-mask {
+        background-image: url('../images/logo-ring-mask@2x.png');
+    }
+}
+
+/* === Offline ======================================== */
+
+body[data-state="offline"] #logo {
+    background: rgba(0, 0, 0, .1);
+}
+
+body[data-state="offline"] #logo .ring-gradient {
+    opacity: 0;
+}
+
+/* === Connecting ===================================== */
+
+body[data-state="connecting"] #logo .ring-gradient.a {
+    -webkit-animation: rotation-cw 2s infinite linear;
+}
+
+body[data-state="connecting"] #logo .ring-gradient.b {
+    -webkit-animation: rotation-ccw 3s infinite linear;
+}
+
+/* === Online ========================================= */
+
+body[data-state="online"] #logo {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+body[data-state="online"] #logo .ring-gradient.a {
+    -webkit-animation: rotation-ccw 6s infinite linear;
+}
+
+body[data-state="online"] #logo .ring-gradient.b {
+    opacity: 0;
+}
+
+/* === Unread ========================================= */
+
+body[data-unread] #logo .phone {
+    -webkit-animation: vibrate 1.4s linear infinite;
+}
 
 .wa-mine {
     text-align: right;

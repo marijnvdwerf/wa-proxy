@@ -28,31 +28,36 @@ define([
         },
 
         checkConnection: function () {
-            try {
-                var attributeValue = (navigator.connection.type === Connection.NONE) ? 'offline' : 'online';
-                $('body').attr('data-connection', attributeValue);
-            } catch (e) {
-                console.log(e);
+            if(navigator.onLine) {
+                if(!this.socket.socket.connected) {
+                    this.socket.socket.connect();
+                    this.updateConnectionState('connecting');
+                }
+            } else {
+                this.socket.socket.disconnect();
+                this.updateConnectionState('offline');
             }
+        },
 
+        connectionState: 'offline',
+        updateConnectionState: function(state) {
+            this.connectionState = state;
+            $('body').attr('data-state', state);
         },
 
         // The Router constructor
         initialize: function () {
-            // Check network state
-            document.addEventListener('online', this.checkConnection, false);
-            document.addEventListener('offline', this.checkConnection, false);
-            document.addEventListener('resume', this.checkConnection, false);
-            this.checkConnection();
-
-            //this.notifyPebble();
             this.socket = io.connect("http://marijnvdwerf-server.jit.su:80");
+
+            this.socket.on('connect', $.proxy(function () {
+                this.updateConnectionState('online');
+            }, this));
 
             this.socket.on('message', $.proxy(function (data) {
                 var conversation = this.conversations.findWhere({identifier: data.conversationIdentifier});
-                if(conversation == null) {
+                if (conversation == null) {
                     conversation = new ConversationModel({
-                        identifier:data.conversationIdentifier
+                        identifier: data.conversationIdentifier
                     });
                     this.conversations.push(conversation);
                 }
@@ -63,6 +68,14 @@ define([
                 this.conversations.sort();
             }, this));
 
+            // Check network state
+            this.checkConnection();
+            window.addEventListener('online', $.proxy(this.checkConnection, this), false);
+            window.addEventListener('offline', $.proxy(this.checkConnection, this), false);
+            window.addEventListener('resume', $.proxy(function(){
+                alert('resume!!!');
+                this.checkConnection();
+            }, this), false);
 
             this.conversations = new ConversationsCollection();
 
