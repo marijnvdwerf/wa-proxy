@@ -143,6 +143,46 @@ body[data-unread] #logo .phone {
     -webkit-animation: vibrate 1.4s linear infinite;
 }
 
-.wa-mine {
-    text-align: right;
+#conversation {
+    background: #EEE8E0;
+}
+
+#conversation ul {
+    list-style: none;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
+#conversation div.ui-input-text {
+    border: none;
+    margin: 0;
+    margin-left: 36px;
+    box-shadow: none;
+    border-radius: 0;
+}
+#conversation .ui-input-text.ui-focus {
+    box-shadow: none;
+    background: #fff;
+}
+
+.wa-message {
+    margin: 8px 0 0;
+    color: #fff;
+    padding: 6px;
+    clear: both;
+    text-shadow: none;
+    font-weight: 300;
+}
+
+.wa-message.in {
+    float: left;
+    margin-right: 36px;
+    background: #34af23;
+}
+
+.wa-message.out {
+    float: right;
+    margin-left: 36px;
+    background: #c7b299;
 }

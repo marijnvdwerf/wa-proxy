@@ -47,11 +47,12 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
         res.send(req.params.identifier);
 
         console.log('identifier: ' + identifier);
+        console.log(JSON.stringify(req.body));
 
-        drafts.insert({
-            target: identifier,
-            message: req.body.message
-        }, {w: 1}, function (err, result) {
+        var message = req.body;
+        message.target = identifier;
+
+        drafts.insert(message, {w: 1}, function (err, result) {
             console.log('result');
             console.log(err);
             console.log(result);

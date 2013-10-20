@@ -44,6 +44,27 @@
     <!-- /header -->
 
     <div data-role="content">
+        <button class="sendContact">Contact</button>
+        <form>
+            <input type="text" class="input-message" name="message" placeholder="Nieuw bericht"/>
+        </form>
+        <ul>
+        </ul>
+    </div>
+    <!-- /content -->
+</div>
+
+
+<div id="contactPicker" data-role="dialog" data-title="Contacts">
+
+    <div data-role="header">
+        <h1>Verzend een contactpersoon</h1>
+    </div>
+    <!-- /header -->
+
+    <div data-role="content">
+        <ul data-role="listview">
+        </ul>
     </div>
     <!-- /content -->
 </div>
@@ -63,20 +84,29 @@
 </script>
 
 <script class="conversation" type="text/template">
-    <form>
-        <input type="text" class="input-message" name="message"/>
-    </form>
-    <ul data-role="listview">
-        <% _.each( messages, function( message, id ) { %>
+    <% _.each( messages, function( message, id ) { %>
         <% if (message.from === "me") { %>
-        <li class="wa-mine">
-            <% } else { %>
-        <li>
-            <% } %>
-            <%= message.body %>
+            <li class="wa-message out">
+        <% } else { %>
+            <li class="wa-message in">
+        <% } %>
+        <%= message.body %>
         </li>
-        <% }); %>
+    <% }); %>
     </ul>
+</script>
+
+<script class="contactPicker" type="text/template">
+
+    <% _.each( contacts, function( contact, id ) { %>
+
+    <li data-id="<%= contact.id %>" class="wa-contact ui-li ui-li-static ui-btn-up-c">
+        <img src=""/>
+        <%= contact.name.formatted %>
+    </li>
+
+    <% }); %>
+
 </script>
 
 </body>
