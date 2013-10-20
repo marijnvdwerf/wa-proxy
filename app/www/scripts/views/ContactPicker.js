@@ -58,13 +58,11 @@ define([
         },
 
         sendContact: function (e) {
-            console.log('Views/ContactPicker::sendContact()');
             // get clicked item
             var target = $(e.currentTarget);
 
             // send contact associated with item
             var contact = _.findWhere(this.contacts, {id: target.data('id')});
-            console.log(contact);
             this.model.sendContact(contact);
 
             // close overlay

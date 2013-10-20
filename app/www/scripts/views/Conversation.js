@@ -11,7 +11,16 @@ define([
         },
 
         initialize: function() {
+            if(this.model) {
+
+            }
+        },
+
+        setModel: function(model) {
+            this.model = model;
             this.listenTo(this.model, 'change', this.render);
+            this.render();
+            this.$el.find('input').val('');
         },
 
         render: function () {
@@ -26,6 +35,11 @@ define([
         postMessage: function () {
             var message = this.$el.find('input[name=message]').val();
             this.model.sendMessage(message);
+
+            // clear input
+            this.$el.find('input').val('');
+
+            // don't submit form
             return false;
         },
 

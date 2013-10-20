@@ -12,38 +12,30 @@
     <script src="cordova.js"></script>
     <script src="scripts/models/pebble.js" type="application/javascript"></script>
     <script src="vendor/socket.io/socket.io.js" type="application/javascript"></script>
-    <script src="vendor/require/require.js" data-main="scripts/mobile"></script>
+    <script src="vendor/require/require.js" data-main="scripts/init"></script>
 </head>
 <body>
 
-<div id="conversationOverview" data-role="page" data-title="Conversations">
+<div data-role="header" class="ui-header ui-bar-a">
+    <a href="#conversations" data-role="button" data-inline="true" data-icon="bars">Default panel</a>
 
-    <div data-role="header">
-        <div id="logo" data-state="online">
-            <div class="ring-gradient a"></div>
-            <div class="ring-gradient b"></div>
-            <div class="ring-mask"></div>
-            <div class="phone"></div>
-        </div>
+    <div id="logo" data-state="online">
+        <div class="ring-gradient a"></div>
+        <div class="ring-gradient b"></div>
+        <div class="ring-mask"></div>
+        <div class="phone"></div>
     </div>
-    <!-- /header -->
+</div>
 
-    <div data-role="content">
+<div id="main" data-role="page" data-title="Conversations">
+
+    <div id="conversations" data-role="panel">
         <ul data-role="listview">
         </ul>
     </div>
-    <!-- /content -->
+    <!-- /panel -->
 
-</div>
-
-<div id="conversation" data-role="page" data-title="Conversation" data-add-back-btn="true">
-
-    <div data-role="header">
-        <h1>Conversation</h1>
-    </div>
-    <!-- /header -->
-
-    <div data-role="content">
+    <div id="conversation" data-role="content">
         <button class="sendContact">Contact</button>
         <form>
             <input type="text" class="input-message" name="message" placeholder="Nieuw bericht"/>
@@ -52,8 +44,18 @@
         </ul>
     </div>
     <!-- /content -->
+
 </div>
 
+<div id="conversationOverview" data-role="page" data-title="Conversations">
+
+    <div data-role="content">
+        <ul data-role="listview">
+        </ul>
+    </div>
+    <!-- /content -->
+
+</div>
 
 <div id="contactPicker" data-role="dialog" data-title="Contacts">
 
@@ -74,7 +76,7 @@
     <% _.each( collection.toJSON(), function( conversation, id ) { %>
 
     <li>
-        <a href="#conversations/<%= conversation.identifier %>">
+        <a href="#" data-id="<%= conversation.identifier %>">
             <%= conversation.identifier %> (<%= conversation.messages.length %>)</a>
     </li>
 
@@ -85,13 +87,13 @@
 
 <script class="conversation" type="text/template">
     <% _.each( messages, function( message, id ) { %>
-        <% if (message.from === "me") { %>
-            <li class="wa-message out">
+    <% if (message.from === "me") { %>
+    <li class="wa-message out">
         <% } else { %>
-            <li class="wa-message in">
+    <li class="wa-message in">
         <% } %>
         <%= message.body %>
-        </li>
+    </li>
     <% }); %>
     </ul>
 </script>

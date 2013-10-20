@@ -10,6 +10,8 @@ define([
             this.listenTo(this.collection, 'remove', this.render);
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sort', this.render);
+
+            this.$el.on('click', 'a', $.proxy(this.openConversation, this));
         },
 
         render: function () {
@@ -20,8 +22,12 @@ define([
                 .listview('refresh');
 
             return this;
-        }
+        },
 
+        openConversation: function (e) {
+            var target = $(e.currentTarget);
+            window.app.openConversation(target.data('id'))
+        }
     });
 
 });
