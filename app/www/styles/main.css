@@ -6,12 +6,17 @@
     box-shadow: 0 1px rgba(0, 0, 0, .1), 0 2px 2px rgba(0, 0, 0, .05);
     box-sizing: border-box;
     z-index: 1000;
+
+    position: fixed;
+    left: 0;
+    right: 0;
 }
 
 #main,
 .ui-panel {
     padding-top: 44px;
 }
+
 
 #logo,
 #logo * {
@@ -147,6 +152,36 @@ body[data-state="online"] #logo .ring-gradient.b {
 
 body[data-unread] #logo .phone {
     -webkit-animation: vibrate 1.4s linear infinite;
+}
+
+
+/* === Android =================================== */
+
+body[data-device*="android"] .ui-header {
+    height: 48px;
+}
+
+body[data-device*="android"] #main,
+body[data-device*="android"] .ui-panel {
+    padding-top: 48px;
+}
+
+
+/* === iOS 7 ===================================== */
+
+body[data-device*="ios-7"] .ui-header {
+    height: 64px;
+}
+
+body[data-device*="ios-7"] #main,
+body[data-device*="ios-7"] .ui-panel {
+    padding-top: 64px;
+}
+
+body[data-device*="ios-7"] #logo {
+    top: auto;
+    bottom: 4px;
+    margin-bottom: 0;
 }
 
 #main .ui-panel-content-wrap {

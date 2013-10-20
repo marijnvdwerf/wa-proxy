@@ -111,5 +111,12 @@
 
 </script>
 
+<script>
+    document.addEventListener('deviceready', function () {
+        var body = document.getElementsByTagName('body')[0];
+        body.setAttribute('data-device', device.platform.toLowerCase() + '-' + device.version.toLowerCase());
+    });
+</script>
+
 </body>
 </html>

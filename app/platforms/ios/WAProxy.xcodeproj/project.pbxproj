@@ -50,6 +50,7 @@
 		B7FDEB4A6DCC406BB317A274 /* CDVVibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EE562649AF40E4B90EA350 /* CDVVibration.m */; };
 		ACEAF84D79E044BFAD1A01B9 /* CDVContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 337DE2EAE17140798AFCDD96 /* CDVContacts.m */; };
 		4CA9041D8CFF44ADAC797BE4 /* CDVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = E267BFE974A64DEB962D47E8 /* CDVContact.m */; };
+		CAE6C18D76EF4E3AB05A63F8 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 15AAE406379B45B985EC7B58 /* CDVDevice.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,8 @@
 		E267BFE974A64DEB962D47E8 /* CDVContact.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVContact.m"; path = "org.apache.cordova.contacts/CDVContact.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		3D511F977E9C4315A7EEEE3A /* CDVContacts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVContacts.h"; path = "org.apache.cordova.contacts/CDVContacts.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		4E150107E87D41C3B81B8721 /* CDVContact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVContact.h"; path = "org.apache.cordova.contacts/CDVContact.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		15AAE406379B45B985EC7B58 /* CDVDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVDevice.m"; path = "org.apache.cordova.device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		FE0B838749974F29A908C178 /* CDVDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVDevice.h"; path = "org.apache.cordova.device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +284,8 @@
 				E267BFE974A64DEB962D47E8 /* CDVContact.m */,
 				3D511F977E9C4315A7EEEE3A /* CDVContacts.h */,
 				4E150107E87D41C3B81B8721 /* CDVContact.h */,
+				15AAE406379B45B985EC7B58 /* CDVDevice.m */,
+				FE0B838749974F29A908C178 /* CDVDevice.h */,
 			);
 			name = Plugins;
 			path = "WAProxy/Plugins";
@@ -453,6 +458,7 @@
 				B7FDEB4A6DCC406BB317A274 /* CDVVibration.m in Sources */,
 				ACEAF84D79E044BFAD1A01B9 /* CDVContacts.m in Sources */,
 				4CA9041D8CFF44ADAC797BE4 /* CDVContact.m in Sources */,
+				CAE6C18D76EF4E3AB05A63F8 /* CDVDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
