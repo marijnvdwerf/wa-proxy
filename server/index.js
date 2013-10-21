@@ -8,7 +8,7 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
     var app = express();
     var http = require('http');
     var server = http.createServer(app);
-    var io = require('socket.io').listen(server);
+    var io = require('socket.io').listen(server, { log: false });
 
     app.use(express.bodyParser());
     server.listen(80);
@@ -74,11 +74,6 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
                     name: req.body.name,
                     body: req.body.message
                 };
-
-                io.sockets.emit('message', {
-                    conversationIdentifier: identifier,
-                    message: message
-                });
         }
 
         console.log('MESSAGE');
@@ -96,36 +91,30 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
             }
         };
 
+        var socketPush = {
+            identifier: identifier,
+            messages: [
+                message
+            ]
+        };
+
         if (identifier.indexOf('@g.us') === -1) {
+            console.log('no group chat. update username');
             upsert['$set']['subject'] = message.name;
+            socketPush.subject = message.name;
         }
+        io.sockets.emit('message', socketPush);
+
 
         conversations.update(query, upsert, {
             upsert: true,
             w: 1
         }, function (err, result) {
-            console.log(result);
-            console.log(err);
+            console.log(['err', err]);
+            console.log(['result', result]);
         });
 
         res.send('');
-
-//        db.update(function (conversation) {
-//            console.log(conversation);
-//            if (conversation.identifier === identifier) {
-//                conversation.messages.push(message);
-//            }
-//            return conversation;
-//        }, function (count) {
-//            if (count === 0) {
-//                db.insert({
-//                    identifier: identifier,
-//                    messages: [message]
-//                });
-//            }
-//        });
-//
-//        res.send('');
     });
 
 
@@ -139,18 +128,23 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
         };
 
         var upsert = {
-            $set: req.body,
-            $setOnInsert: {
-                messages: []
-            }
+            $set: req.body
         };
+
+        console.log('UPSERT');
+        console.log(upsert);
+
+        var socketPush = req.body;
+        socketPush.identifier = identifier;
+        socketPush.messages = [];
+        io.sockets.emit('message', socketPush);
 
         conversations.update(query, upsert, {
             upsert: true,
             w: 1
         }, function (err, result) {
-            console.log(result);
-            console.log(err);
+            console.log(['err', err]);
+            console.log(['result', result]);
         });
 
         res.send('');

@@ -25,18 +25,19 @@ define([
                 this.updateConnectionState('online');
             }, this));
 
-            this.socket.on('message', $.proxy(function (data) {
-                var conversation = this.conversations.findWhere({identifier: data.conversationIdentifier});
+            this.socket.on('message', $.proxy(function (conversationData) {
+                var conversation = this.conversations.findWhere({identifier: conversationData.identifier});
                 if (conversation == null) {
-                    conversation = new ConversationModel({
-                        identifier: data.conversationIdentifier
-                    });
+                    conversation = new ConversationModel(conversationData);
                     this.conversations.push(conversation);
+                } else {
+                    conversation.update(conversationData);
                 }
 
-                conversation.get('messages').push(data.message);
+                if (conversationData.messages.length > 0) {
+                    this.notify(conversationData.messages[0]);
+                }
 
-                this.notify(data.message);
                 this.conversations.sort();
             }, this));
 
@@ -67,7 +68,9 @@ define([
             this.conversations.fetch();
 
             this.conversations.on('sync', $.proxy(function () {
-                this.openConversation(this.conversations.first().get('identifier'));
+                if (this.conversations.length > 0) {
+                    this.openConversation(this.conversations.first().get('identifier'));
+                }
             }, this));
 
             $('body').on('click', 'a[href="#conversations"]', function () {

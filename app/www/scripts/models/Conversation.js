@@ -17,6 +17,7 @@ define([
         idAttribute: "_id",
 
         initialize: function () {
+            this.set('messages', new MessagesCollection(this.get('messages')));
             this.listenTo(this.get('messages'), 'sort', this.onMessage);
         },
 
@@ -34,6 +35,16 @@ define([
 
         onMessage: function () {
             this.trigger('change');
+        },
+
+        update: function (data) {
+            if (data.subject != undefined && data.subject !== this.get('subject')) {
+                this.set('subject', data.subject);
+            }
+
+            if (data.messages != undefined && data.messages.length > 0) {
+                this.get('messages').add(data.messages);
+            }
         },
 
         sendMessage: function (body) {
@@ -92,12 +103,6 @@ define([
             console.log('Models/Conversation::sendContact()');
             this.sendMedia('CONTACT: ' + contact.name.formatted, MEDIA_TYPE_VCARD, contact);
         },
-
-        parse: function (response, options) {
-            console.log('parse');
-            response.messages = new MessagesCollection(response.messages);
-            return response;
-        }
     });
 
 });
