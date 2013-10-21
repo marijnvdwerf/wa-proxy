@@ -7,7 +7,7 @@ define([
 
         contacts: [],
 
-        initialize: function() {
+        initialize: function () {
             this.$el.find('[data-role="listview"]').on('click', 'li', $.proxy(this.sendContact, this));
         },
 
@@ -47,6 +47,10 @@ define([
             options.multiple = true;
             var fields = ["displayName", "name", "phoneNumbers", "emails", "addresses", "ims", "organizations", "birthday", "note", "urls"];
             navigator.contacts.find(fields, function (contacts) {
+                contacts = _.reject(contacts, function (contact) {
+                    // filter out unnamed contacts
+                    return (contact.name.formatted.trim() === '');
+                });
                 contacts = _.sortBy(contacts, function (contact) {
                     return contact.name.formatted;
                 });
