@@ -3,15 +3,17 @@ define([
     'models/Conversation',
     'collections/Conversations',
     'views/ConversationOverview',
-    'views/Conversation'
-], function ($, ConversationModel, ConversationsCollection, ConversationOverviewView, ConversationView) {
+    'views/Conversation',
+    'views/ContactPicker'
+], function ($, ConversationModel, ConversationsCollection, ConversationOverviewView, ConversationView, ContactPickerView) {
 
     return {
         conversations: null,
 
         views: {
             conversationsOverview: null,
-            conversation: null
+            conversation: null,
+            contactPicker: null
         },
 
         connectionState: 'offline',
@@ -58,6 +60,10 @@ define([
                 el: '#conversation'
             });
 
+            this.views.contactPicker = new ContactPickerView({
+                el: '#contactPicker'
+            });
+
             this.conversations.fetch();
 
             this.conversations.on('sync', $.proxy(function () {
@@ -100,12 +106,21 @@ define([
             $('body').attr('data-state', state);
         },
 
+
+        pickContactForModel: function (model) {
+            this.views.contactPicker.model = model;
+            this.views.contactPicker.findContacts();
+            $.mobile.changePage('#contactPicker');
+        },
+
         openConversation: function (identifier) {
             var conversation = this.conversations.findWhere({ identifier: identifier });
             this.conversations.setCurrent(identifier);
             this.views.conversation.setModel(conversation);
             $('#conversations').panel('close');
         }
-    };
+    }
+        ;
 
-});
+})
+;

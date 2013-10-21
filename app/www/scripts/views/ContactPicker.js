@@ -7,15 +7,14 @@ define([
 
         contacts: [],
 
-        initialize: function () {
-            this.findContacts();
+        initialize: function() {
+            this.$el.find('[data-role="listview"]').on('click', 'li', $.proxy(this.sendContact, this));
         },
 
         render: function () {
             var template = _.template($('script.contactPicker').html(), { contacts: this.contacts });
             this.$el.find('[data-role="listview"]')
-                .html(template)
-                .on('click', 'li', $.proxy(this.sendContact, this));
+                .html(template);
 
             if (this.$el.data('mobile-page') !== undefined) {
                 // After the first appearance, we need to notify the page that it needs to be styled

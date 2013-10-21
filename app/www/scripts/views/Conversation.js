@@ -44,12 +44,7 @@ define([
         },
 
         sendContact: function() {
-            var pickerView = new ContactPickerView({
-                el: '#contactPicker',
-                model: this.model
-            });
-
-            $.mobile.changePage('#contactPicker');
+            window.app.pickContactForModel(this.model);
         }
     });
 
