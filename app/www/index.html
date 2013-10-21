@@ -84,9 +84,15 @@
     <li data-icon="false">
         <% } %>
         <a href="#" data-id="<%= conversation.get('identifier') %>">
-            <h2><%= conversation.get('identifier') %></h2>
+            <h2><%= conversation.get('subject') %></h2>
 
-            <p><%= conversation.get('messages').first().get('body') %></p>
+
+            <p><% if (conversation.get('messages').length > 0) { %>
+                <%= conversation.get('messages').first().get('body') %>
+                <% } else { %>
+                &nbsp;
+                <% } %>
+            </p>
             <span class="ui-li-count"><%= conversation.get('messages').length %></span>
         </a>
     </li>

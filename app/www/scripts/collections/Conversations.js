@@ -9,7 +9,7 @@ define([
         url: 'http://marijnvdwerf-server.jit.su/conversations',
 
         comparator: function (conversationA, conversationB) {
-            return conversationB.get('messages').last().get('time') - conversationA.get('messages').last().get('time');
+            return conversationB.getLastUpdated() - conversationA.getLastUpdated();
         },
 
         setCurrent: function (identifier) {

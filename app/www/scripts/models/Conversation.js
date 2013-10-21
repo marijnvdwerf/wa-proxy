@@ -8,7 +8,7 @@ define([
 
     return Backbone.Model.extend({
         defaults: {
-            name: '',
+            subject: '',
             identifier: '',
             messages: null,
             current: false
@@ -18,6 +18,14 @@ define([
 
         initialize: function () {
             this.listenTo(this.get('messages'), 'sort', this.onMessage);
+        },
+
+        getLastUpdated: function () {
+            if (this.get('messages').length > 0) {
+                return this.get('messages').last().get('time');
+            }
+
+            return  Math.floor(new Date().getTime() / 1000);
         },
 
         isGroupChat: function () {
