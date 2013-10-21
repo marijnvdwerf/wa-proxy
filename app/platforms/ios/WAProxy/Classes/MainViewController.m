@@ -99,6 +99,13 @@
 }
 */
 
+#pragma mark Status Bar
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark UIWebDelegate implementation
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
