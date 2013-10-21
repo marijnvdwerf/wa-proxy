@@ -24,7 +24,7 @@ define([
         },
 
         render: function () {
-            this.template = _.template($('script.conversation').html(), {conversation: this.model.toJSON(), messages: this.model.get("messages").toJSON()});
+            this.template = _.template($('script.conversation').html(), {conversation: this.model});
             this.$el.find('ul').html(this.template);
 
             this.$el.find('[data-role="header"] h1').text(this.model.get('name'));

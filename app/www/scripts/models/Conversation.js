@@ -9,7 +9,7 @@ define([
     return Backbone.Model.extend({
         defaults: {
             name: '',
-            id: '',
+            identifier: '',
             messages: null,
             current: false
         },
@@ -18,6 +18,10 @@ define([
 
         initialize: function () {
             this.listenTo(this.get('messages'), 'sort', this.onMessage);
+        },
+
+        isGroupChat: function () {
+            return (this.get('identifier').indexOf('@g.us') !== -1);
         },
 
         onMessage: function () {

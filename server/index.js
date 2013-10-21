@@ -71,7 +71,7 @@ MongoClient.connect(process.env.DB_URL, {}, function (err, db) {
                     id: req.body.id,
                     time: req.body.t,
                     from: (req.body.author ? req.body.author : req.body.from),
-
+                    name: req.body.name,
                     body: req.body.message
                 };
 

@@ -96,14 +96,19 @@
 </script>
 
 <script class="conversation" type="text/template">
-    <% _.each( messages, function( message, id ) { %>
-    <% if (message.from === "me") { %>
+    <% conversation.get('messages').each(function( message, id ) { %>
+    <% if (message.get('from') === 'me') { %>
     <li class="wa-message out">
-        <% } else { %>
-    <li class="wa-message in">
-        <% } %>
-        <%= message.body %>
+        <p><%= message.get('body') %></p>
     </li>
+    <% } else { %>
+    <li class="wa-message in">
+        <% if(conversation.isGroupChat()) { %>
+        <span class="wa-name"><%= message.get('name') %></span>
+        <% } %>
+        <p><%= message.get('body') %></p>
+    </li>
+    <% } %>
     <% }); %>
     </ul>
 </script>
