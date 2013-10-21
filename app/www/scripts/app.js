@@ -60,6 +60,10 @@ define([
 
             this.conversations.fetch();
 
+            this.conversations.on('sync', $.proxy(function () {
+                this.openConversation(this.conversations.first().get('identifier'));
+            }, this));
+
             $('body').on('click', 'a[href="#conversations"]', function () {
                 $('#conversations').panel('toggle');
             });
