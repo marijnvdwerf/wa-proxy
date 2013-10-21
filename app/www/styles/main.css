@@ -1,3 +1,9 @@
+body {
+    font-family: Helvetica, Arial, sans-serif
+}
+
+/* === Header bar ====================================== */
+
 .ui-header {
     height: 44px;
     background: #34af23;
@@ -17,6 +23,11 @@
     padding-top: 44px;
 }
 
+.ui-overlay-a > .ui-header {
+    opacity: 0;
+}
+
+/* === Logo ============================================ */
 
 #logo,
 #logo * {
@@ -114,7 +125,7 @@
     }
 }
 
-/* === Offline ======================================== */
+/* --- Offline  ---------------------------------------- */
 
 body[data-state="offline"] #logo {
     background: rgba(0, 0, 0, .1);
@@ -124,7 +135,7 @@ body[data-state="offline"] #logo .ring-gradient {
     opacity: 0;
 }
 
-/* === Connecting ===================================== */
+/* --- Connecting -------------------------------------- */
 
 body[data-state="connecting"] #logo .ring-gradient.a {
     -webkit-animation: rotation-cw 2s infinite linear;
@@ -134,7 +145,7 @@ body[data-state="connecting"] #logo .ring-gradient.b {
     -webkit-animation: rotation-ccw 3s infinite linear;
 }
 
-/* === Online ========================================= */
+/* --- Online ------------------------------------------ */
 
 body[data-state="online"] #logo {
     background: rgba(255, 255, 255, 0.6);
@@ -148,45 +159,61 @@ body[data-state="online"] #logo .ring-gradient.b {
     opacity: 0;
 }
 
-/* === Unread ========================================= */
+/* --- Unread ------------------------------------------ */
 
 body[data-unread] #logo .phone {
     -webkit-animation: vibrate 1.4s linear infinite;
 }
 
-
-/* === Android =================================== */
-
-body[data-device*="android"] .ui-header {
-    height: 48px;
-}
-
-body[data-device*="android"] #main,
-body[data-device*="android"] .ui-panel {
-    padding-top: 48px;
-}
-
-
-/* === iOS 7 ===================================== */
-
-body[data-device*="ios-7"] .ui-header {
-    height: 64px;
-}
-
-body[data-device*="ios-7"] #main,
-body[data-device*="ios-7"] .ui-panel {
-    padding-top: 64px;
-}
-
-body[data-device*="ios-7"] #logo {
-    top: auto;
-    bottom: 4px;
-    margin-bottom: 0;
-}
-
 #main .ui-panel-content-wrap {
     background: #EEE8E0;
 }
+
+/* === Panel toggle button ============================= */
+
+.wa-toggle-panel {
+    position: absolute;
+    bottom: -1px;
+    top: -1px;
+    left: 0;
+    width: 48px;
+}
+
+.wa-toggle-panel .wa-bar {
+    background-color: #ffffff;
+    display: block;
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    margin-top: -8px;
+}
+
+.wa-toggle-panel .wa-bar:nth-child(2) {
+    margin-top: -2px;
+}
+
+.wa-toggle-panel .wa-bar:nth-child(3) {
+    margin-top: 4px;
+}
+
+/* === Sidebar ========================================= */
+
+#conversations {
+    -webkit-box-shadow: inset -1px 0 #D6D1CA;
+    -moz-box-shadow: inset -1px 0 #D6D1CA;
+    box-shadow: inset -1px 0 #D6D1CA;
+}
+
+#conversations li {
+    background: none;
+    border-top: none;
+    border-bottom: 1px solid rgba(214, 209, 202, 0.4);
+}
+
+/* === Conversation ==================================== */
 
 #conversation ul {
     list-style: none;
@@ -229,8 +256,50 @@ body[data-device*="ios-7"] #logo {
     background: #c7b299;
 }
 
+/* === OS specific overrides =========================== */
+
+/* --- Android ----------------------------------------- */
+
+body[data-device*="android"] .ui-header {
+    height: 48px;
+}
+
+body[data-device*="android"] #main,
+body[data-device*="android"] .ui-panel {
+    padding-top: 48px;
+}
+
+/* --- iOS 7 ------------------------------------------- */
+
+body[data-device*="ios-7"] .ui-header {
+    height: 64px;
+}
+
+body[data-device*="ios-7"] #main,
+body[data-device*="ios-7"] .ui-panel {
+    padding-top: 64px;
+}
+
+body[data-device*="ios-7"] #logo {
+    top: auto;
+    bottom: 4px;
+    margin-bottom: 0;
+}
+
+body[data-device*="ios-7"] .wa-toggle-panel .wa-bar {
+    top: 42px;
+}
+
 /* wrap push on wide viewports once open */
 @media (min-width: 780px) {
+    .wa-toggle-panel {
+        display: none;
+    }
+
+    #main {
+        background: url('../images/bg-tablet.png') center;
+    }
+
     #main .ui-panel-content-wrap {
         position: relative;
         width: 470px;
@@ -249,10 +318,6 @@ body[data-device*="ios-7"] #logo {
         visibility: visible;
         background: #fff;
         box-sizing: border-box;
-
-        -webkit-box-shadow: inset -1px 0 #D6D1CA;
-        -moz-box-shadow: inset -1px 0 #D6D1CA;
-        box-shadow: inset -1px 0 #D6D1CA;
     }
 
     #main .ui-panel-dismiss-display-push {
