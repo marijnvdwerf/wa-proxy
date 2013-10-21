@@ -231,7 +231,7 @@ body[data-unread] #logo .phone {
 }
 
 #conversation div.ui-input-text {
-    border: none;
+    border: 1px solid #ccc;
     margin: 0;
     margin-left: 36px;
     box-shadow: none;
