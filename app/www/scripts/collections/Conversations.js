@@ -8,8 +8,16 @@ define([
 
         url: 'http://marijnvdwerf-server.jit.su/conversations',
 
-        comparator: function(conversationA, conversationB) {
+        comparator: function (conversationA, conversationB) {
             return conversationB.get('messages').last().get('time') - conversationA.get('messages').last().get('time');
+        },
+
+        setCurrent: function (identifier) {
+            this.forEach(function (conversation) {
+                conversation.set('current', false);
+            });
+            this.findWhere({ identifier: identifier }).set('current', true);
+            this.trigger('changeCurrent');
         }
     });
 

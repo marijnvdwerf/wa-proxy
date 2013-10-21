@@ -78,8 +78,11 @@
 <script class="conversationOverview" type="text/template">
 
     <% _.each( collection.toJSON(), function( conversation, id ) { %>
-
+    <% if (conversation.current) { %>
+    <li class="wa-current">
+        <% } else { %>
     <li>
+        <% } %>
         <a href="#" data-id="<%= conversation.identifier %>">
             <%= conversation.identifier %> (<%= conversation.messages.length %>)</a>
     </li>

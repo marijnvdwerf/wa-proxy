@@ -102,6 +102,7 @@ define([
 
         openConversation: function (identifier) {
             var conversation = this.conversations.findWhere({ identifier: identifier });
+            this.conversations.setCurrent(identifier);
             this.views.conversation.setModel(conversation);
             $('#conversations').panel('close');
         }

@@ -10,6 +10,7 @@ define([
             this.listenTo(this.collection, 'remove', this.render);
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sort', this.render);
+            this.listenTo(this.collection, 'changeCurrent', this.render);
 
             this.$el.on('click', 'a', $.proxy(this.openConversation, this));
         },

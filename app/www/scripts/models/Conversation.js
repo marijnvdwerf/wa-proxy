@@ -10,7 +10,8 @@ define([
         defaults: {
             name: '',
             id: '',
-            messages: null
+            messages: null,
+            current: false
         },
 
         idAttribute: "_id",
