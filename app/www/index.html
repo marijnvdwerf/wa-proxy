@@ -77,16 +77,19 @@
 
 <script class="conversationOverview" type="text/template">
 
-    <% _.each( collection.toJSON(), function( conversation, id ) { %>
-    <% if (conversation.current) { %>
-    <li class="wa-current">
+    <% collection.each(function( conversation, id ) { %>
+    <% if (conversation.get('current')) { %>
+    <li class="wa-current" data-icon="false">
         <% } else { %>
-    <li>
+    <li data-icon="false">
         <% } %>
-        <a href="#" data-id="<%= conversation.identifier %>">
-            <%= conversation.identifier %> (<%= conversation.messages.length %>)</a>
-    </li>
+        <a href="#" data-id="<%= conversation.get('identifier') %>">
+            <h2><%= conversation.get('identifier') %></h2>
 
+            <p><%= conversation.get('messages').first().get('body') %></p>
+            <span class="ui-li-count"><%= conversation.get('messages').length %></span>
+        </a>
+    </li>
     <% }); %>
 
 
