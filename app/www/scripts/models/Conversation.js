@@ -102,7 +102,7 @@ define([
         sendContact: function (contact) {
             console.log('Models/Conversation::sendContact()');
             this.sendMedia('CONTACT: ' + contact.name.formatted, MEDIA_TYPE_VCARD, contact);
-        },
+        }
     });
 
 });

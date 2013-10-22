@@ -82,11 +82,10 @@ define([
 
         notify: function (data) {
             try {
-                navigator.notification.vibrate(2500);
-
+                navigator.notification.vibrate(200);
                 pebblePlugin.notifyPebble(function () {
                 }, function () {
-                }, data.name, data.message);
+                }, data.name, data.body);
             } catch (error) {
 
             }

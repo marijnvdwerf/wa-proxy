@@ -1,5 +1,3 @@
-
-
 var pebblePlugin = {
     notifyPebble: function(successCallback, errorCallback, sender, message) {
         cordova.exec(
